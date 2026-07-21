@@ -1,19 +1,59 @@
 version: 2
 
 sources:
+
   - name: source_bronze
     database: pysparkdbt
-    schema: bronze 
+    schema: bronze
+
     tables:
       - name: trips
-      - name: customers
 
   - name: source_silver
     database: pysparkdbt
-    schema: silver    
+    schema: silver
+
     tables:
+
       - name: customers
-      - name: locations
-      - name: payments
+        columns:
+          - name: customer_id
+            tests:
+              - unique
+              - not_null
+
+          - name: email
+            tests:
+              - not_null
+
       - name: drivers
+        columns:
+          - name: driver_id
+            tests:
+              - unique
+              - not_null
+
+          - name: phone_number
+            tests:
+              - not_null
+
       - name: vehicles
+        columns:
+          - name: vehicle_id
+            tests:
+              - unique
+              - not_null
+
+      - name: locations
+        columns:
+          - name: location_id
+            tests:
+              - unique
+              - not_null
+
+      - name: payments
+        columns:
+          - name: payment_id
+            tests:
+              - unique
+              - not_null
