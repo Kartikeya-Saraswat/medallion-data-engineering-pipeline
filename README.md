@@ -1,62 +1,72 @@
-# End-to-End Data Engineering Pipeline with Databricks, PySpark & dbt
+# 🚖 Ride Analytics Data Platform
+### End-to-End Data Engineering Pipeline using Databricks, PySpark, Delta Lake & dbt
 
-## Project Overview
+## 📌 Project Overview
 
-This project demonstrates an end-to-end modern data engineering pipeline built using the Medallion Architecture. It ingests raw ride-sharing datasets, transforms them through Bronze, Silver, and Gold layers, and produces business-ready analytical datasets.
+This project demonstrates an end-to-end modern data engineering pipeline built using the **Medallion Architecture (Bronze → Silver → Gold)** on Databricks.
 
-The project showcases industry-standard data engineering practices including Delta Lake, Structured Streaming, dbt transformations, Slowly Changing Dimensions (SCD Type 2), data quality testing, and analytical SQL.
+The pipeline ingests raw ride-sharing data, performs scalable data transformations using **PySpark**, stores data as **Delta Tables**, models analytical datasets using **dbt**, and produces business-ready data marts for reporting and decision making.
+
+The project follows industry-standard data engineering practices including:
+
+- Incremental data ingestion
+- Structured Streaming
+- Delta Lake
+- Data Modeling
+- Data Quality Testing
+- Slowly Changing Dimensions (SCD Type 2)
+- Business Analytics using Advanced SQL
 
 ---
 
-## Architecture
+# 🏗️ Architecture
 
 ```
-                CSV Files
-                     │
-                     ▼
+                  CSV Files
+                      │
+                      ▼
         Bronze Layer (Streaming Ingestion)
-                     │
-                     ▼
-        Silver Layer (PySpark Transformations)
-                     │
-                     ▼
-          Gold Layer (dbt Models)
-                     │
-                     ▼
-      Business Analytics (SQL Notebook)
+                      │
+                      ▼
+      Silver Layer (PySpark Transformations)
+                      │
+                      ▼
+        Gold Layer (dbt Business Models)
+                      │
+                      ▼
+     Business Analytics (SQL Notebook)
 ```
 
 ---
 
-## Tech Stack
+# 🚀 Technologies Used
 
 - Databricks
 - Apache Spark (PySpark)
 - Delta Lake
+- Structured Streaming
 - dbt Core
 - SQL
 - Git & GitHub
 
 ---
 
-## Project Structure
+# 📂 Project Structure
 
 ```
-project/
+.
+├── analyses/
 │
-├── notebooks/
-│   ├── bronze_ingestion
-│   ├── silver_transformation
-│   └── gold_analysis
+├── macros/
 │
 ├── models/
+│   ├── bronze/
 │   ├── silver/
-│   ├── gold/
-│   └── sources.yml
+│   └── gold/
 │
 ├── snapshots/
 │
-├── macros/
+├── tests/
 │
 ├── README.md
 │
@@ -65,20 +75,18 @@ project/
 
 ---
 
-# Medallion Architecture
+# 🥉 Bronze Layer
 
-## Bronze Layer
+The Bronze layer performs incremental ingestion of raw ride-sharing datasets into Delta tables using **Structured Streaming**.
 
-The Bronze layer ingests raw CSV data into Delta tables using Structured Streaming.
+### Responsibilities
 
-Features:
-
-- Incremental ingestion
-- Checkpointing
+- Incremental data ingestion
 - Schema enforcement
-- Delta tables
+- Fault-tolerant checkpointing
+- Raw data preservation
 
-Tables:
+### Tables
 
 - Customers
 - Drivers
@@ -89,27 +97,28 @@ Tables:
 
 ---
 
-## Silver Layer
+# 🥈 Silver Layer
 
-The Silver layer cleans and standardizes the raw data using PySpark.
+The Silver layer transforms raw data into standardized datasets using PySpark.
 
-Transformations include:
+### Transformations
 
-- Data cleaning
 - Duplicate removal
-- Phone number formatting
-- Name standardization
+- Null handling
+- Data cleaning
+- Phone number standardization
+- Customer name formatting
 - Email domain extraction
 - Data type conversions
 - Incremental MERGE operations
 
 ---
 
-## Gold Layer
+# 🥇 Gold Layer
 
-The Gold layer contains reusable business models created using dbt.
+The Gold layer contains reusable business models built using **dbt**.
 
-Dimension Tables
+### Dimension Models
 
 - dimCustomers
 - dimDrivers
@@ -117,102 +126,216 @@ Dimension Tables
 - dimPayments
 - dimLocations
 
-Fact Table
+### Fact Model
 
 - factTrips
 
-Business Summary Models
+### Business Models
 
 - customer_summary
 - driver_summary
-- payment_summary
 - vehicle_summary
+- payment_summary
 - monthly_revenue
+
+These models provide reusable datasets for reporting, dashboards and business analytics.
 
 ---
 
-# Data Quality
+# ✅ Data Quality
 
-The project includes dbt tests to ensure data quality.
+The project uses **dbt Tests** to ensure reliable and trustworthy datasets.
 
 Implemented tests include:
 
-- Unique keys
-- Not Null checks
+- Unique constraints
+- Not Null validations
 - Relationship tests
-- Source validation
+- Source validations
 
 ---
 
-# Slowly Changing Dimensions
+# 🕒 Slowly Changing Dimensions
 
-Implemented using dbt Snapshots.
+Implemented using **dbt Snapshots (SCD Type 2)**.
 
 Features:
 
-- SCD Type 2
 - Historical record tracking
 - Automatic versioning
+- Change detection
+- Dimension history preservation
 
 ---
 
-# Business Analysis
+# 📊 Business Analytics
 
-The Gold Analysis notebook answers business questions such as:
+The Gold Analysis notebook demonstrates how business-ready datasets can answer real-world business questions using advanced SQL.
 
-- Who are the highest-value customers?
-- Which drivers generate the most revenue?
-- How has revenue changed month-over-month?
-- Which payment methods contribute the highest revenue?
-- Customer segmentation using CASE statements
-- Driver rankings using Window Functions
-- Top drivers within each city
-- Revenue contribution analysis
+## Customer Analytics
+
+### 🔹 Who are the top 10 customers?
+
+Identifies the highest-value customers based on lifetime spending.
+
+**Business Value**
+
+- Customer loyalty programs
+- VIP customer identification
+- Revenue concentration analysis
 
 ---
 
-# SQL Concepts Demonstrated
+### 🔹 Customer Segmentation
 
+Customers are classified into:
+
+- Gold
+- Silver
+- Bronze
+
+using SQL CASE statements.
+
+**Business Value**
+
+- Personalized marketing
+- Customer retention strategies
+- Loyalty campaigns
+
+---
+
+## Driver Analytics
+
+### 🔹 Driver Revenue Ranking
+
+Ranks drivers based on revenue generated using SQL Window Functions.
+
+**Business Value**
+
+- Incentive programs
+- Driver performance evaluation
+
+---
+
+### 🔹 Top 3 Drivers in Each City
+
+Uses ROW_NUMBER() to identify the highest-performing drivers within every city.
+
+**Business Value**
+
+- Regional performance tracking
+- Local incentive planning
+
+---
+
+## Revenue Analytics
+
+### 🔹 Month-over-Month Revenue Growth
+
+Uses LAG() to compare revenue against the previous month.
+
+**Business Value**
+
+- Trend analysis
+- Growth monitoring
+
+---
+
+### 🔹 Cumulative Revenue
+
+Uses SUM() OVER() to calculate running revenue.
+
+**Business Value**
+
+- Business growth tracking
+- Executive reporting
+
+---
+
+## Payment Analytics
+
+### 🔹 Revenue Contribution by Payment Method
+
+Calculates each payment method's percentage contribution to total revenue.
+
+**Business Value**
+
+- Payment strategy optimization
+- Customer payment behavior analysis
+
+---
+
+### 🔹 Revenue Summary
+
+Uses SQL ROLLUP to generate payment-wise revenue along with the grand total.
+
+**Business Value**
+
+- Financial reporting
+- Executive summaries
+
+---
+
+## Fleet Analytics
+
+### 🔹 Vehicle Revenue Ranking
+
+Ranks vehicle types based on generated revenue using DENSE_RANK().
+
+**Business Value**
+
+- Fleet optimization
+- Vehicle investment planning
+
+---
+
+# 💡 SQL Concepts Demonstrated
+
+- Aggregations
 - Window Functions
+- CASE
 - RANK()
-- ROW_NUMBER()
 - DENSE_RANK()
+- ROW_NUMBER()
 - LAG()
 - SUM() OVER()
-- CASE
 - ROLLUP
-- Aggregations
 - CTEs
 
 ---
 
-# Skills Demonstrated
+# 🎯 Skills Demonstrated
 
 - Data Engineering
 - ETL Pipeline Development
 - Medallion Architecture
-- PySpark Transformations
+- Apache Spark
+- PySpark
 - Delta Lake
 - Structured Streaming
 - dbt
 - SQL Analytics
 - Data Modeling
+- Data Quality Testing
+- SCD Type 2
 - Git Version Control
 
 ---
 
-# Future Improvements
+# 🔮 Future Enhancements
 
-- Power BI Dashboard
-- Apache Airflow orchestration
+- Interactive Power BI Dashboard
+- Apache Airflow Orchestration
 - CI/CD using GitHub Actions
-- Data Quality Monitoring
-- Unit Testing for dbt Models
+- Automated Data Quality Monitoring
+- Cloud Deployment (Azure/AWS)
 
 ---
 
-# Author
+# 👨‍💻 Author
 
 **Kartikeya Saraswat**
 
-Data Professional | Python | PySpark | Databricks | dbt | SQL
+Data Professional
+
+Python • SQL • PySpark • Databricks • Delta Lake • dbt
