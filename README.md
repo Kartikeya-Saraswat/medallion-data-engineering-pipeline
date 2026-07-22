@@ -168,6 +168,27 @@ Features:
 
 ---
 
+## 📓 Databricks Notebooks
+
+The repository includes Databricks notebooks implementing the complete Medallion Architecture pipeline.
+
+### Bronze Layer
+- Incremental ingestion using Structured Streaming
+- Delta table creation
+- Checkpointing and schema enforcement
+
+### Silver Layer
+- Data cleansing and standardization
+- Deduplication
+- Incremental MERGE operations
+- Feature engineering
+
+### Gold Layer
+- Business analytics using reusable dbt models
+- Advanced SQL with window functions, ranking, cumulative metrics, and customer segmentation
+
+---
+
 # 📊 Business Analytics
 
 The Gold Analysis notebook demonstrates how business-ready datasets can answer real-world business questions using advanced SQL.
